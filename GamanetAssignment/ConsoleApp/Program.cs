@@ -7,10 +7,24 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter the command: ");
-            string command = ReadCommand();
+            Decoder.PacketResponse += ShowResponse;
+            ExecuteCommands();
 
             Console.ReadLine();
+        }
+        private static void ExecuteCommands()
+        {
+            Console.Write("Enter the command: ");
+            string command = ReadCommand();
+            if (command.StartsWith("PT"))
+            {
+                Text(command);
+            }
+            else if (command.StartsWith("PS"))
+            {
+                Sound(command);
+            }
+            ExecuteCommands();
         }
 
         private static string ReadCommand()
@@ -24,6 +38,22 @@ namespace ConsoleApp
             }
             Console.Write('\n');
             return command;
+        }
+        
+        private static void Sound(string command)
+        {
+            int[] values = Decoder.GetArrayFromCommand(command);
+            Console.Beep(values[0],values[1]);
+        }
+
+        private static void Text(string command)
+        {
+            Console.WriteLine(Decoder.PureText(command));
+        }
+
+        private static void ShowResponse(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

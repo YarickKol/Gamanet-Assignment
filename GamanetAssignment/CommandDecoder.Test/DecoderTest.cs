@@ -2,6 +2,9 @@
 
 namespace CommandDecoder.Test
 {
+    /// <summary>
+    /// XUnit tests writed for method CommandIsFull
+    /// </summary>
     public class DecoderTest
     {
         [Theory]
